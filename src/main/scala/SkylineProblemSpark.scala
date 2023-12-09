@@ -1,12 +1,13 @@
 import scala.collection.mutable
 import scala.reflect.io.File
 import org.apache.spark
-import org.apache.spark.rdd
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 object SkylineProblemSpark {
-  def getSkylineBaseline(points: rdd.MapPartitionsRDD[String, String]): Array[Array[Double]] = {
-      points.take(10).show()
+  def getSkylineBaseline(points: RDD[String]): Array[Array[Double]] = {
+      println(points.getClass)
+      Array(Array(0.02))
   }
 
   def getSkylineEfficient(points: Array[Array[Int]]): List[List[Int]] = {
@@ -25,13 +26,9 @@ object SkylineProblemSpark {
     val distribution_data_file = "/distributions_scripts/datasets/" + dimensions + "_" + num_of_points + "_" + distribution + ".txt"
     //println(distribution_data_file)
     val rddDistribution = sc.textFile(File(".").toAbsolute + distribution_data_file)
-
+    //println(rddDistribution.getClass)
     getSkylineBaseline(rddDistribution)
     //rddDistribution.collect().foreach(println)
-
-
-
-    
 
     // Stop the SparkContext
     sc.stop()
