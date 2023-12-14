@@ -46,6 +46,12 @@ def show_distribution(uniform, normal, correlated, anticorrelated):
 
 
 def save_datasets(uniform, normal, correlated, anticorrelated, dim, num_of_points):
+    # Specify the path of the folder you want to create
+    folder_path = "datasets"
+
+    # Use the os.makedirs() function to create the folder and its parent directories if they don't exist
+    os.makedirs(folder_path, exist_ok=True)
+    
     current_directory = os.getcwd()
     f_normal = open(current_directory + '/datasets/' + str(dim) + '_' + str(num_of_points) + '_normal.txt', 'w')
     f_uniform = open(current_directory + '/datasets/' + str(dim) + '_' + str(num_of_points) + '_uniform.txt', 'w')
@@ -81,10 +87,15 @@ def main():
     
     dataset_anticorrelated = np.random.multivariate_normal(mean, cov_anticorrelated, args.num_points)
     dataset_correlated = np.random.multivariate_normal(mean, cov_correlated, args.num_points)
-
+    
     for i in range(args.num_points):
+      dataset_normal.append(list(np.random.normal(100, 10, args.dimensions)))
+      dataset_uniform.append(list(np.random.uniform(0, 200, args.dimensions)))
+
+
+    '''for i in range(args.num_points):
         dataset_normal.append(list(np.random.normal((100, 100))))
-        dataset_uniform.append(list(np.random.uniform((100, 100))))
+        dataset_uniform.append(list(np.random.uniform((100, 100))))'''
 
     save_datasets(dataset_uniform, dataset_normal, dataset_correlated, dataset_anticorrelated, args.dimensions, args.num_points)
 
