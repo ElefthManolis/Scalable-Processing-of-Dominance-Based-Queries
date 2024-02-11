@@ -1,5 +1,9 @@
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
+import scala.util.Random
+import scala.collection.mutable.PriorityQueue
+import scala.math.Ordering
+
 
 case class Point(coordinates: List[Double])
 
@@ -42,9 +46,56 @@ object SkylineProblemSpark {
   
   
   
-  
-  
-  
+def topKDominantPointsImportanceSampling(coordinates: RDD[Point], k: Int): RDD[Point] = {
+  val sampleSize = math.min(k * 10, coordinates.count()).toInt
+  val sample = coordinates.takeSample(false, sampleSize)
+
+  // Calculate dominance scores for sampled points
+  val dominanceScores = sample.map(point => (point, dominantScoreApproximate(point, sample)))
+
+  // Compute importance weights based on dominance scores
+  val totalScore = dominanceScores.map(_._2).sum.toDouble
+  val weights = dominanceScores.map { case (point, score) => (point, score.toDouble / totalScore) }.toMap
+
+  // Sample points with importance weights
+  val sampledPoints = sample.filter(point => Random.nextDouble() < weights.getOrElse(point, 0.0))
+
+
+  // Compute dominance scores for sampled points
+  val sampledDominanceScores = sampledPoints.map(point => (point, dominantScoreApproximate(point, sampledPoints)))
+
+  // Maintain a priority queue to track top-k dominant points
+  implicit val ordering: Ordering[(Point, Int)] = Ordering.by[(Point, Int), Int](_._2).reverse
+  val topKQueue = sampledDominanceScores.foldLeft(PriorityQueue.empty[(Point, Int)](ordering))(updateTopKQueue(_, _, k))
+
+
+  // Extract the top-k dominant points from the queue
+  val topKPoints = topKQueue.toList.map(_._1)
+
+  // Return the RDD of top-k dominant points
+  coordinates.context.parallelize(topKPoints)
+}
+
+// Helper function to update the priority queue with new points
+def updateTopKQueue(queue: PriorityQueue[(Point, Int)], pointScore: (Point, Int), k: Int): PriorityQueue[(Point, Int)] = {
+  if (queue.size < k || pointScore._2 > queue.head._2) {
+    queue.enqueue(pointScore)
+    if (queue.size > k) {
+      queue.dequeue()
+    }
+  }
+  queue
+}
+
+def dominantScoreApproximate(point: Point, otherPoints: Seq[Point]): Int = {
+  // Compute the dominant score for the given point
+  otherPoints.count(otherPoint => point.coordinates.zip(otherPoint.coordinates).forall { case (px, cx) => cx >= px })
+}
+
+
+
+
+
 
   def main(args: Array[String]): Unit = {
     println("Start")
@@ -72,8 +123,17 @@ object SkylineProblemSpark {
     
     // Find and print the k most dominant points
     println("K-dominant points Set:")
-    val kdominantRDD = topKDominantPoints(pointRDD,2)
+    val kdominantRDD = topKDominantPoints(pointRDD,10)
     kdominantRDD.collect().foreach(println)
+    
+    
+    // Find and print the k most dominant points using approximation algorithm
+    println("K-dominant points Set with approximation:")
+    //val kdominantRDDAppr = topKDominantPointsImportanceSampling(pointRDD,10)
+    //kdominantRDDAppr.collect().foreach(println)
+    
+
+    
     
     //Find and print the k most dominant points in skyline
     println("K-dominant points in skyline Set:")

@@ -1,4 +1,5 @@
-[0m[[0m[31merror[0m] [0m[0m/home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/src/main/scala/SkylineProblemSpark.scala:75:24: not found: value opKDominantPoints[0m
-[0m[[0m[31merror[0m] [0m[0m    val kdominantRDD = opKDominantPoints(pointRDD,2)[0m
-[0m[[0m[31merror[0m] [0m[0m                       ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/src/main/scala/SkylineProblemSpark.scala:160:40: not enough arguments for method topKDominantsApproximate: (coordinates: org.apache.spark.rdd.RDD[Point], previousSkyline: List[Point], k: Int)org.apache.spark.rdd.RDD[Point].[0m
+[0m[[0m[31merror[0m] [0m[0mUnspecified value parameter k.[0m
+[0m[[0m[31merror[0m] [0m[0m    val rdd1 = topKDominantsApproximate(pointRDD,10)[0m
+[0m[[0m[31merror[0m] [0m[0m                                       ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

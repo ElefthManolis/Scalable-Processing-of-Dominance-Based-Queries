@@ -1,1 +1,11 @@
-[0m[[0m[0mdebug[0m] [0m[0mJar uptodate: /home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/target/scala-2.12/simple-project_2.12-1.0.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mPackaging /home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/target/scala-2.12/simple-project_2.12-1.0.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SkylineProblemSpark.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/target/scala-2.12/classes/SkylineProblemSpark.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SkylineProblemSpark$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/target/scala-2.12/classes/SkylineProblemSpark$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Point$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/target/scala-2.12/classes/Point$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Point.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/nikos/Desktop/Test/Scalable-Processing-of-Dominance-Based-Queries/target/scala-2.12/classes/Point.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m
